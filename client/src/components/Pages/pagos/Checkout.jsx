@@ -6,7 +6,7 @@ import PaymentStatus from './PaymentStatus';
 
 // Inicializa con tu PUBLIC_KEY de Mercado Pago
 // Nota: Se utilizan credenciales APP_USR-. Para pruebas, asegúrate de loguearte con un Usuario de Prueba (Test User).
-initMercadoPago('APP_USR-df328434-7a93-47a5-be69-855afe727548', {
+initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY, {
     locale: 'es-AR' // Ajusta a tu país
 });
 

@@ -28,9 +28,14 @@ const Espectacular = () => {
                 // Simplificamos la validación: si hay respuesta, la usamos.
                 if (res.data) {
                     setConfig(res.data);
+                } else {
+                    // Si la respuesta es exitosa (200) pero vacía (null), usamos la config por defecto para que se pueda editar
+                    setConfig({ slider: [], banners: [], sectionStyle: { layout: 'classic' } });
                 }
             } catch (error) {
                 console.error("No se pudo cargar la configuración personalizada, usando defecto.");
+                // Usamos una configuración vacía por defecto para que no desaparezca el componente
+                setConfig({ slider: [], banners: [], sectionStyle: { layout: 'classic' } });
             }
             finally {
                 setLoading(false);

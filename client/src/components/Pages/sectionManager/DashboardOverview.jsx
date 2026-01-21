@@ -20,7 +20,7 @@ const DashboardOverview = () => {
         // 2. Obtener historial para visualización
         const res = await axios.get(`${BACKEND_URL}/api/status`);
         
-        setHistory(data);
+        setHistory(res.data);
       } catch (error) {
         console.error("Error inicializando dashboard:", error);
       } finally {
