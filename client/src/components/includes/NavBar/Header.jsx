@@ -5,6 +5,8 @@ import OffcanvasCart from "./OffcanvasCart";
 import OffcanvasSearch from "./OffcanvasSearch";
 import { Link } from "react-router-dom";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isUserOverlayVisible, setIsUserOverlayVisible] = useState(false);
@@ -25,7 +27,7 @@ const Header = () => {
       if (parsedUser && parsedUser.id) {
         try {
           // Al llamar a esta ruta, el backend ahora hace populate del carrito
-          const response = await fetch(`http://localhost:5000/api/users/${parsedUser.id}`);
+          const response = await fetch(`${BACKEND_URL}/api/users/${parsedUser.id}`);
           if (response.ok) {
             const data = await response.json();
             setUser(data);
@@ -39,7 +41,7 @@ const Header = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/products");
+      const response = await axios.get(`${BACKEND_URL}/api/products`);
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products for search:", error);
@@ -52,9 +54,9 @@ const Header = () => {
     
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products"); // O api/configuration si prefieres la lista centralizada
+        const res = await axios.get(`${BACKEND_URL}/api/products`); // O api/configuration si prefieres la lista centralizada
         // Si usas api/configuration como en los otros componentes:
-        const configRes = await axios.get("http://localhost:5000/api/configuration");
+        const configRes = await axios.get(`${BACKEND_URL}/api/configuration`);
         if (configRes.data && configRes.data.categorias) {
            setCategories(configRes.data.categorias);
         }
