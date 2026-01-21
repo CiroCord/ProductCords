@@ -24,6 +24,7 @@ const PORT = process.env.PORT || 5000;
 // Configuración de CORS Segura para Producción
 const whitelist = [
   process.env.FRONTEND_URL, // Tu dominio de Vercel (configurar en Render)
+  'https://productcords.vercel.app', // Dominio explícito de Vercel
   'http://localhost:5173',  // Vite Local
   'http://localhost:3000'   // CRA Local (por si acaso)
 ];
@@ -34,6 +35,7 @@ app.use(cors({
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.log("Origen bloqueado por CORS:", origin); // Log para depuración en Render
       callback(new Error('Bloqueado por CORS'));
     }
   },

@@ -5,6 +5,8 @@ import "../../../styles/normalize.css";
 import "../../../styles/vendor.css";
 import "../../../styles/style.css";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const OffcanvasCart = ({ user, refreshCart }) => {
   const navigate = useNavigate();
   const [placement, setPlacement] = useState('end');
@@ -33,7 +35,7 @@ const OffcanvasCart = ({ user, refreshCart }) => {
   const handleRemove = async (productId) => {
     if (!user?._id) return;
     try {
-      await axios.delete(`http://localhost:5000/api/users/cart/${user._id}/${productId}`);
+      await axios.delete(`${BACKEND_URL}/api/users/cart/${user._id}/${productId}`);
       refreshCart(); // Recargar el usuario para actualizar el carrito
     } catch (error) {
       console.error("Error al eliminar producto", error);
@@ -43,7 +45,7 @@ const OffcanvasCart = ({ user, refreshCart }) => {
   const handleQuantityChange = async (productId, newQuantity) => {
     if (!user?._id || newQuantity < 1) return;
     try {
-      await axios.put(`http://localhost:5000/api/users/cart/${user._id}/${productId}`, { quantity: newQuantity });
+      await axios.put(`${BACKEND_URL}/api/users/cart/${user._id}/${productId}`, { quantity: newQuantity });
       refreshCart();
     } catch (error) {
       console.error("Error al actualizar cantidad", error);
@@ -54,7 +56,7 @@ const OffcanvasCart = ({ user, refreshCart }) => {
     if (!user?._id) return;
     
       try {
-        await axios.delete(`http://localhost:5000/api/users/cart/${user._id}`);
+        await axios.delete(`${BACKEND_URL}/api/users/cart/${user._id}`);
         refreshCart();
       } catch (error) {
         console.error("Error al vaciar el carrito", error);

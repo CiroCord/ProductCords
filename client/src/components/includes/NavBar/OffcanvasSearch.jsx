@@ -5,6 +5,8 @@ import '../../../styles/normalize.css'
 import '../../../styles/vendor.css'
 import '../../../styles/style.css'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const OffcanvasSearch = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +26,7 @@ const OffcanvasSearch = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/products");
+        const response = await axios.get(`${BACKEND_URL}/api/products`);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -34,7 +36,7 @@ const OffcanvasSearch = () => {
 
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/configuration");
+        const res = await axios.get(`${BACKEND_URL}/api/configuration`);
         if (res.data && res.data.categorias) {
           setCategories(res.data.categorias);
         }
