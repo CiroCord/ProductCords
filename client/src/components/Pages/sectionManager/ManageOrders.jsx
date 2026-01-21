@@ -48,6 +48,82 @@ const ManageOrders = () => {
         }
     };
 
+    // --- FUNCIÓN PARA SIMULAR VENTAS (DATA DUMMY) ---
+    const handleSimulateOrders = async () => {
+        if (userLoading) return;
+        if (isSpectator) {
+            alert("Modo espectador: No puedes generar datos.");
+            return;
+        }
+        if (!window.confirm("¿Generar 5 pedidos simulados aleatorios? \nEsto usará tu carrito actual temporalmente y generará estadísticas.")) return;
+        
+        setLoading(true);
+        try {
+            const storedUser = localStorage.getItem("user");
+            if (!storedUser) return;
+            const user = JSON.parse(storedUser);
+            
+            // 1. Obtener productos para elegir al azar
+            const prodRes = await axios.get(`${BACKEND_URL}/api/products`);
+            const allProducts = prodRes.data;
+
+            if (allProducts.length === 0) {
+                alert("No hay productos para simular ventas.");
+                return;
+            }
+
+            // Generar 5 pedidos
+            for (let i = 0; i < 5; i++) {
+                // A. Vaciar carrito previo por seguridad
+                await axios.delete(`${BACKEND_URL}/api/users/cart/${user.id}`);
+
+                // B. Agregar 1 a 3 productos random al carrito
+                const numItems = Math.floor(Math.random() * 3) + 1;
+                let currentTotal = 0;
+
+                for (let j = 0; j < numItems; j++) {
+                    const randomProd = allProducts[Math.floor(Math.random() * allProducts.length)];
+                    const qty = Math.floor(Math.random() * 2) + 1;
+                    
+                    await axios.post(`${BACKEND_URL}/api/users/cart/${user.id}`, {
+                        productId: randomProd._id,
+                        quantity: qty
+                    });
+                    
+                    const price = randomProd.precioDescuento 
+                        ? (randomProd.precioOriginal * (1 - randomProd.precioDescuento / 100)) 
+                        : randomProd.precioOriginal;
+                    currentTotal += price * qty;
+                }
+
+                // C. Crear Orden con estados variados
+                const statuses = ['approved', 'preparacion', 'camino', 'entregado'];
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                
+                // Simulamos un ID de pago falso
+                await axios.post(`${BACKEND_URL}/api/orders`, {
+                    userId: user.id,
+                    paymentId: `SIM-${Date.now()}-${i}`,
+                    status: randomStatus,
+                    total: currentTotal
+                });
+            }
+
+            // D. Limpieza final y actualización de BI
+            await axios.delete(`${BACKEND_URL}/api/users/cart/${user.id}`);
+            await axios.post(`${BACKEND_URL}/api/status/generate`);
+            
+            alert("¡5 Pedidos simulados creados exitosamente!");
+            fetchOrders(); // Recargar tabla
+
+        } catch (error) {
+            console.error("Error simulando:", error);
+            alert("Hubo un error al simular pedidos.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     // Filtramos los pedidos según el checkbox
     const filteredOrders = orders.filter(order => {
         if (showHistory) return true; // Si está activado, mostramos todo
@@ -65,6 +141,7 @@ const ManageOrders = () => {
                         <input className="form-check-input" type="checkbox" id="showHistory" checked={showHistory} onChange={(e) => setShowHistory(e.target.checked)} />
                         <label className="form-check-label" htmlFor="showHistory">Mostrar Historial (Entregados)</label>
                     </div>
+                    <button className="btn btn-warning btn-sm fw-bold" onClick={handleSimulateOrders} disabled={loading}>⚡ Simular Ventas</button>
                     <button className="btn btn-outline-secondary btn-sm" onClick={fetchOrders}>Actualizar</button>
                 </div>
             </div>
