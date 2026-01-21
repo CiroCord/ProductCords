@@ -11,11 +11,7 @@ import 'swiper/css/pagination';
 import { useUser } from "../user/UserContext";
 
 // --- CONFIGURACIÓN DE CONEXIÓN ---
-// Como tu backend sigue en local, forzamos la URL local.
-// Nota: Esto funcionará en tu PC (incluso con Ngrok en frontend), pero NO en el celular.
-const BACKEND_URL = 'http://localhost:5000';
-// Detectamos la URL desde variables de entorno (Vite) o usamos localhost como fallback.
-// Si usas Create React App, cambia import.meta.env.VITE_BACKEND_URL por process.env.REACT_APP_BACKEND_URL
+
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const Espectacular = () => {
