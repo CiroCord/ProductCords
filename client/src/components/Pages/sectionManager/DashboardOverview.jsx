@@ -46,8 +46,13 @@ const DashboardOverview = () => {
 
     // 1. Filtrar historial
     const filtered = history.filter(item => {
+      if (!item.date) return false;
       const date = new Date(item.date);
-      return date >= startDate && date <= now;
+      
+      // Corrección de Zona Horaria: Usamos componentes UTC para evitar que el offset reste un día
+      const normalizedDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes());
+      
+      return normalizedDate >= startDate && normalizedDate <= now;
     });
 
     if (!filtered.length) return { displayStats: null, displayChart: [] };
