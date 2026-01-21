@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const ResetPassword = () => {
     const { id, token } = useParams(); // Obtenemos ID y Token de la URL
     const navigate = useNavigate();
@@ -21,7 +23,7 @@ const ResetPassword = () => {
 
         try {
             // Ajusta la URL al puerto de tu BACKEND
-            const res = await axios.post(`http://localhost:5000/api/users/reset-password/${id}/${token}`, { password });
+            const res = await axios.post(`${BACKEND_URL}/api/users/reset-password/${id}/${token}`, { password });
             
             setMessage(res.data.message);
             setError('');

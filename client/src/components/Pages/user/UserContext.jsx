@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const UserContext = createContext();
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 export const UserProvider = ({ children }) => {
     // Inicializamos el estado leyendo directamente de localStorage para evitar retrasos
     const [user, setUser] = useState(() => {
@@ -31,7 +33,7 @@ export const UserProvider = ({ children }) => {
                 
                 if (userId) {
                     // Buscamos los datos frescos del usuario por ID
-                    const res = await axios.get(`http://localhost:5000/api/users/${userId}`);
+                    const res = await axios.get(`${BACKEND_URL}/api/users/${userId}`);
                     setUser(res.data);
                     checkSpectator(res.data);
                 } else {

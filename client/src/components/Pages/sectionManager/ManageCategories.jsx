@@ -16,6 +16,8 @@ const AVAILABLE_ICONS = [
     '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handbag-icon lucide-handbag"><path d="M2.048 18.566A2 2 0 0 0 4 21h16a2 2 0 0 0 1.952-2.434l-2-9A2 2 0 0 0 18 8H6a2 2 0 0 0-1.952 1.566z"/><path d="M8 11V6a4 4 0 0 1 8 0v5"/></svg>',//bolsa
     ];
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const ManageCategories = () => {
     const [categories, setCategories] = useState([]);
     const [newCat, setNewCat] = useState("");
@@ -40,7 +42,7 @@ const ManageCategories = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/configuration");
+                const res = await axios.get(`${BACKEND_URL}/api/configuration`);
                 if (res.data && res.data.categorias) {
                     setCategories(res.data.categorias);
                 }
@@ -71,7 +73,7 @@ const ManageCategories = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.post("http://localhost:5000/api/configuration/category", { nombre: newCat.trim(), icono: selectedIcon });
+            const res = await axios.post(`${BACKEND_URL}/api/configuration/category`, { nombre: newCat.trim(), icono: selectedIcon });
             setCategories(res.data.categorias);
             setNewCat("");
             setSelectedIcon("");
@@ -98,7 +100,7 @@ const ManageCategories = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.delete("http://localhost:5000/api/configuration/category", {
+            const res = await axios.delete(`${BACKEND_URL}/api/configuration/category`, {
                 data: { nombre: cat.nombre }
             });
             setCategories(res.data.categorias);
@@ -139,7 +141,7 @@ const ManageCategories = () => {
             const updatedCategories = categories.map(c => c._id === editingCategory._id ? { ...c, nombre: editValue.trim(), icono: editIcon } : c);
             
             // Usamos el endpoint PUT que actualiza toda la lista
-            const res = await axios.put("http://localhost:5000/api/configuration", { categorias: updatedCategories });
+            const res = await axios.put(`${BACKEND_URL}/api/configuration`, { categorias: updatedCategories });
             
             setCategories(res.data.categorias);
             setEditingCategory(null);

@@ -4,6 +4,7 @@ import ProductForm from "../inicio/productos/IngresarProducto";
 import '../../../styles/style.css';
 import { useUser } from "../user/UserContext";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const ManageProducts = () => {
     const [products, setProducts] = useState([]);
@@ -26,8 +27,8 @@ const ManageProducts = () => {
     const fetchData = async () => {
         try {
             const [prodRes, catRes] = await Promise.all([
-                axios.get("http://localhost:5000/api/products"),
-                axios.get("http://localhost:5000/api/configuration")
+                axios.get(`${BACKEND_URL}/api/products`),
+                axios.get(`${BACKEND_URL}/api/configuration`)
             ]);
             setProducts(prodRes.data);
             setFilteredProducts(prodRes.data);
@@ -109,7 +110,7 @@ const ManageProducts = () => {
 
         if (!window.confirm("¿Estás seguro de que deseas eliminar este producto permanentemente?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/products/${id}`);
+            await axios.delete(`${BACKEND_URL}/api/products/${id}`);
             fetchData(); // Recargar lista
         } catch (error) {
             console.error("Error al eliminar:", error);

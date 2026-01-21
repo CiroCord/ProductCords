@@ -12,6 +12,8 @@ import ManageProducts from "./ManageProducts";
 import ManageOrders from "./ManageOrders";
 import ManageEspectacular from "./ManageEspectacular";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -30,7 +32,7 @@ const AdminPanel = () => {
         }
         const user = JSON.parse(storedUser);
         try {
-            const res = await axios.get(`http://localhost:5000/api/users/admin-check/${user.id}`);
+            const res = await axios.get(`${BACKEND_URL}/api/users/admin-check/${user.id}`);
             if (!res.data.isAdmin) {
                 navigate('/');
             }

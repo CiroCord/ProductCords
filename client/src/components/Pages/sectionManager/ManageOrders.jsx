@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useUser } from "../user/UserContext";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const ManageOrders = () => {
     const [orders, setOrders] = useState([]);
@@ -17,7 +18,7 @@ const ManageOrders = () => {
     const fetchOrders = async () => {
         try {
             // Asumimos que existe este endpoint para obtener todos los pedidos
-            const res = await axios.get('http://localhost:5000/api/orders');
+            const res = await axios.get(`${BACKEND_URL}/api/orders`);
             setOrders(res.data);
         } catch (error) {
             console.error("Error fetching orders:", error);
@@ -38,7 +39,7 @@ const ManageOrders = () => {
         }
 
         try {
-            await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status: newStatus });
+            await axios.put(`${BACKEND_URL}/api/orders/${orderId}/status`, { status: newStatus });
             // Actualizar localmente
             setOrders(prev => prev.map(o => o._id === orderId ? { ...o, status: newStatus } : o));
         } catch (error) {

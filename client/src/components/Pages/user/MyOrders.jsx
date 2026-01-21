@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const MyOrders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ const MyOrders = () => {
             const user = JSON.parse(storedUser);
 
             try {
-                const res = await axios.get(`http://localhost:5000/api/orders/user/${user.id}`);
+                const res = await axios.get(`${BACKEND_URL}/api/orders/user/${user.id}`);
                 setOrders(res.data);
             } catch (error) {
                 console.error("Error fetching user orders:", error);

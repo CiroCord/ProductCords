@@ -5,7 +5,7 @@ import { useUser } from "../user/UserContext";
 
 // --- CONFIGURACIÓN DE CONEXIÓN ---
 // Debe coincidir con la configuración de Espectacular.jsx
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const ManageEspectacular = () => {
     const [config, setConfig] = useState(null);

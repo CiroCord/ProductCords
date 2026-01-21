@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
@@ -13,7 +15,7 @@ const ForgotPassword = () => {
         
         try {
             // Ajusta la URL al puerto de tu BACKEND (ej. 3000)
-            const res = await axios.post('http://localhost:5000/api/users/forgot-password', { email });
+            const res = await axios.post(`${BACKEND_URL}/api/users/forgot-password`, { email });
             setMessage(res.data.message);
         } catch (err) {
             setError(err.response?.data?.message || 'Error al enviar el correo.');

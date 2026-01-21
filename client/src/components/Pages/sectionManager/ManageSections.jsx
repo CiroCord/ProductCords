@@ -5,6 +5,7 @@ import ProductList from "./ProductList";
 import SectionEditor from "./SectionEditor";
 import { useUser } from "../user/UserContext";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const ManageSections = () => {
   const [sections, setSections] = useState([]);
@@ -14,7 +15,7 @@ const ManageSections = () => {
   useEffect(() => {
     const fetchSections = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/sections");
+        const response = await axios.get(`${BACKEND_URL}/api/sections`);
         const sortedSections = response.data.sort((a, b) => a.order - b.order);
         setSections(sortedSections);
       } catch (error) {
@@ -85,7 +86,7 @@ const ManageSections = () => {
         _id: isNew ? undefined : _id,
       }));
 
-      await axios.post("http://localhost:5000/api/sections/bulk-update", { sections: updatedSections });
+      await axios.post(`${BACKEND_URL}/api/sections/bulk-update`, { sections: updatedSections });
       alert("Cambios guardados exitosamente");
     } catch (error) {
       console.error("Error al guardar cambios:", error);

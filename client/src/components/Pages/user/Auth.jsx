@@ -4,6 +4,8 @@ import "../../../styles/auth.css";
 import { Link } from 'react-router-dom';
 import { useUser } from "./UserContext";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const Auth = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -62,7 +64,7 @@ const Auth = () => {
   
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/register", {
+        const response = await fetch(`${BACKEND_URL}/api/users/register`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -103,7 +105,7 @@ const Auth = () => {
     e.preventDefault();
 
     try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
+        const response = await fetch(`${BACKEND_URL}/api/users/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

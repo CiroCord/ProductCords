@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from "./UserContext";
 
+// Configuración de URL dinámica
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 export default function EditProfile() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -37,7 +40,7 @@ export default function EditProfile() {
             }
 
             try {
-                const { data } = await axios.get(`http://localhost:5000/api/users/${storedUser.id}`);
+                const { data } = await axios.get(`${BACKEND_URL}/api/users/${storedUser.id}`);
                 
                 // Formatear fecha para que el input type="date" la reconozca (YYYY-MM-DD)
                 const fecha = data.fechaNacimiento ? data.fechaNacimiento.split('T')[0] : '';
@@ -97,7 +100,7 @@ export default function EditProfile() {
                 const storedUser = JSON.parse(localStorage.getItem('user'));
                 setModalLoading(true);
                 // Solicitamos al backend que envíe el código
-                await axios.post(`http://localhost:5000/api/users/request-verification/${storedUser.id}`);
+                await axios.post(`${BACKEND_URL}/api/users/request-verification/${storedUser.id}`);
                 setShowModal(true); // Abrimos el modal
                 setMessage(null);
             } catch (error) {
@@ -118,7 +121,7 @@ export default function EditProfile() {
             if (!updateData.password) delete updateData.password;
             delete updateData.confirmPassword;
 
-            await axios.put(`http://localhost:5000/api/users/${storedUser.id}`, updateData);
+            await axios.put(`${BACKEND_URL}/api/users/${storedUser.id}`, updateData);
             
             setMessage({ type: 'success', text: 'Perfil actualizado con éxito.' });
             
@@ -156,7 +159,7 @@ export default function EditProfile() {
         try {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             setModalLoading(true);
-            await axios.post(`http://localhost:5000/api/users/request-verification/${storedUser.id}`);
+            await axios.post(`${BACKEND_URL}/api/users/request-verification/${storedUser.id}`);
             setShowModal(true);
             setMessage(null);
         } catch (error) {
@@ -171,7 +174,7 @@ export default function EditProfile() {
         try {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             // En axios.delete, el body va dentro de la propiedad 'data'
-            await axios.delete(`http://localhost:5000/api/users/${storedUser.id}`, {
+            await axios.delete(`${BACKEND_URL}/api/users/${storedUser.id}`, {
                 data: { verificationCode }
             });
             
@@ -191,7 +194,7 @@ export default function EditProfile() {
             if (!updateData.password) delete updateData.password;
             delete updateData.confirmPassword;
 
-            await axios.put(`http://localhost:5000/api/users/${storedUser.id}`, updateData);
+            await axios.put(`${BACKEND_URL}/api/users/${storedUser.id}`, updateData);
             
             setMessage({ type: 'success', text: 'Perfil verificado y actualizado con éxito.' });
             setShowModal(false);

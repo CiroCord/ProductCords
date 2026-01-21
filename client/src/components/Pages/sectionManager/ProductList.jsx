@@ -15,6 +15,8 @@ const calcularPrecioConDescuento = (precioOriginal, descuento) => {
   return (precioOriginal * (1 - descuento / 100)).toFixed(2);
 };
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const ProductList = ({ section }) => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -32,7 +34,7 @@ const ProductList = ({ section }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
+        const response = await fetch(`${BACKEND_URL}/api/products`);
         const data = await response.json();
         
         setProducts(data);
@@ -57,7 +59,7 @@ const ProductList = ({ section }) => {
       if (storedUser) {
         const user = JSON.parse(storedUser);
         try {
-          const response = await axios.get(`http://localhost:5000/api/users/favorites/${user.id}`);
+          const response = await axios.get(`${BACKEND_URL}/api/users/favorites/${user.id}`);
           
           const data = Array.isArray(response.data) ? response.data : (response.data.favorites || []);
           const favIds = data.map(item => (typeof item === 'object' && item !== null ? item._id : item));
@@ -120,7 +122,7 @@ const ProductList = ({ section }) => {
 
     const user = JSON.parse(storedUser);
     try {
-      await axios.post(`http://localhost:5000/api/users/cart/${user.id}`, {
+      await axios.post(`${BACKEND_URL}/api/users/cart/${user.id}`, {
         productId: product._id,
         quantity: quantity,
       });
@@ -172,9 +174,9 @@ const ProductList = ({ section }) => {
 
     try {
       if (isFav) {
-        await axios.delete(`http://localhost:5000/api/users/favorites/${user.id}/${productId}`);
+        await axios.delete(`${BACKEND_URL}/api/users/favorites/${user.id}/${productId}`);
       } else {
-        await axios.post(`http://localhost:5000/api/users/favorites/${user.id}`, { productId });
+        await axios.post(`${BACKEND_URL}/api/users/favorites/${user.id}`, { productId });
       }
     } catch (error) {
       console.error("Error toggling favorite:", error);

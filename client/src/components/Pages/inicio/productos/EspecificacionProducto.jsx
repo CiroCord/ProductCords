@@ -14,7 +14,7 @@ import 'swiper/css/pagination';
 
 import "../../../../styles/style.css";
 
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -60,7 +60,7 @@ const ProductDetail = () => {
     setAdding(true);
 
     try {
-        await axios.post(`http://localhost:5000/api/users/cart/${user.id}`, {
+        await axios.post(`${BACKEND_URL}/api/users/cart/${user.id}`, {
             productId: product._id,
             quantity: quantity
         });

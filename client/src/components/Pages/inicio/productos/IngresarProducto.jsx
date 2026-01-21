@@ -6,6 +6,9 @@ import "../../../../styles/forms.css";
 import { useUser } from "../../user/UserContext";
 
 
+// Configuración de URL dinámica
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const ProductForm = ({ existingProduct, onSuccess }) => {
   const [formData, setFormData] = useState({
     nombre: "",
@@ -32,7 +35,7 @@ const ProductForm = ({ existingProduct, onSuccess }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/configuration");
+        const res = await axios.get(`${BACKEND_URL}/api/configuration`);
         setCategories(res.data.categorias || []);
       } catch (error) {
         console.error("Error al cargar categorías:", error);
@@ -251,7 +254,7 @@ const ProductForm = ({ existingProduct, onSuccess }) => {
       if (existingProduct) {
         // MODO EDICIÓN
         await axios.put(
-          `http://localhost:5000/api/products/${existingProduct._id}`,
+          `${BACKEND_URL}/api/products/${existingProduct._id}`,
           formDataToSend,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -259,7 +262,7 @@ const ProductForm = ({ existingProduct, onSuccess }) => {
       } else {
         // MODO CREACIÓN
         await axios.post(
-          "http://localhost:5000/api/products",
+          `${BACKEND_URL}/api/products`,
           formDataToSend,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
