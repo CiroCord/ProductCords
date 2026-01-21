@@ -6,9 +6,10 @@ import PaymentStatus from './PaymentStatus';
 
 // Inicializa con tu PUBLIC_KEY de Mercado Pago
 // Nota: Se utilizan credenciales APP_USR-. Para pruebas, asegúrate de loguearte con un Usuario de Prueba (Test User).
-initMercadoPago(import.meta.env.VITE_MP_PUBLIC_KEY, {
-    locale: 'es-AR' // Ajusta a tu país
-});
+const mpPublicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
+if (mpPublicKey) {
+    initMercadoPago(mpPublicKey, { locale: 'es-AR' });
+}
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
 
@@ -106,6 +107,17 @@ const Checkout = () => {
     }
 
     if (loading) return <div className="container py-5 text-center"><h3>Cargando checkout...</h3></div>;
+
+    if (!mpPublicKey) {
+        return (
+            <div className="container py-5">
+                <div className="alert alert-danger">
+                    <strong>Error de Configuración:</strong> No se detectó la Public Key de Mercado Pago. <br/>
+                    Si agregaste la variable <code>VITE_MP_PUBLIC_KEY</code> en Vercel recientemente, necesitas ir a <strong>Deployments</strong> y hacer <strong>Redeploy</strong> para que los cambios surtan efecto.
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="container py-5">

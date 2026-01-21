@@ -64,8 +64,8 @@ const Espectacular = () => {
     
     // Renderizadores Skeleton (Cargando)
     const renderSkeletonMainBlock = () => (
-        <div className="banner-ad large block-1 h-100 bg-light placeholder-glow rounded overflow-hidden" aria-hidden="true">
-            <div className="row banner-content p-4 p-lg-5 h-100 align-items-md-center flex-column flex-md-row justify-content-between m-0">
+        <div className="hero-banner large block-1 h-100 bg-light placeholder-glow rounded overflow-hidden" aria-hidden="true">
+            <div className="row hero-content p-4 p-lg-5 h-100 align-items-md-center flex-column flex-md-row justify-content-between m-0">
                 <div className="content-wrapper col-md-7">
                     <h3 className="placeholder col-6 display-4 fw-bold mb-3"></h3>
                     <p className="placeholder col-12 mb-2"></p>
@@ -80,8 +80,8 @@ const Espectacular = () => {
     );
 
     const renderSkeletonBanner = (heightClass = "") => (
-        <div className={`banner-ad bg-light ${heightClass} w-100 placeholder-glow position-relative overflow-hidden rounded`} aria-hidden="true">
-            <div className="row banner-content p-4 p-lg-5 h-100 align-items-center position-relative m-0">
+        <div className={`hero-banner bg-light ${heightClass} w-100 placeholder-glow position-relative overflow-hidden rounded`} aria-hidden="true">
+            <div className="row hero-content p-4 p-lg-5 h-100 align-items-center position-relative m-0">
                 <div className="content-wrapper col-8">
                     <div className="placeholder col-4 mb-3"></div>
                     <h3 className="placeholder col-8 mb-3"></h3>
@@ -94,7 +94,7 @@ const Espectacular = () => {
     // 1. Bloque Principal (Slider)
     const renderMainBlock = () => (
       // Quitamos bg-info fijo para que cada slide tenga su propio color
-      <div className="banner-ad large block-1 h-100">
+      <div className="hero-banner large block-1 h-100">
         <Swiper
           modules={[Pagination]}
           spaceBetween={0}
@@ -106,7 +106,7 @@ const Espectacular = () => {
           {(activeConfig.slider || []).map((slide) => (
             <SwiperSlide key={slide.id} className="w-100">
               {/* Aplicamos el color de fondo dinámico aquí */}
-              <div className={`row banner-content p-4 p-lg-5 h-100 w-100 align-items-md-center flex-column flex-md-row justify-content-between m-0 ${slide.backgroundColor || 'bg-info-subtle'}`} >
+              <div className={`row hero-content p-4 p-lg-5 h-100 w-100 align-items-md-center flex-column flex-md-row justify-content-between m-0 ${slide.backgroundColor || 'bg-info-subtle'}`} >
                 <div className="content-wrapper col-md-7">
                   <h3 className="display-4 fw-bold">{slide.title}</h3>
                   <p>{slide.description}</p>
@@ -132,14 +132,14 @@ const Espectacular = () => {
       
       // Si no hay slides, mostramos vacío o placeholder
       if (slides.length === 0) {
-          return <div className={`banner-ad bg-light ${heightClass} d-flex align-items-center justify-content-center text-muted`}>Vacío</div>;
+          return <div className={`hero-banner bg-light ${heightClass} d-flex align-items-center justify-content-center text-muted`}>Vacío</div>;
       }
 
       // Función para renderizar el contenido de un slide individual
       const renderSlideContent = (slide) => (
-        <div className={`banner-ad ${slide.backgroundColor || 'bg-light'} ${heightClass} position-relative overflow-hidden w-100 h-100`} style={{ backgroundImage: `url('${slide.image || ""}')`, backgroundRepeat: "no-repeat", backgroundPosition: "bottom right", backgroundSize: 'contain' }}>
+        <div className={`hero-banner ${slide.backgroundColor || 'bg-light'} ${heightClass} position-relative overflow-hidden w-100 h-100`} style={{ backgroundImage: `url('${slide.image || ""}')`, backgroundRepeat: "no-repeat", backgroundPosition: "bottom right", backgroundSize: 'contain' }}>
              {/* Capa para asegurar legibilidad si no hay imagen de fondo o es muy clara */}
-            <div className="row banner-content p-4 p-lg-5 h-100 align-items-center position-relative m-0" style={{zIndex: 2}}>
+            <div className="row hero-content p-4 p-lg-5 h-100 align-items-center position-relative m-0" style={{zIndex: 2}}>
               <div className="content-wrapper col-8">
                 <div className={slide.categoryClass}>{slide.discount || slide.subtitle}</div>
                 <h3 className={slide.titleClass}>{slide.title}</h3>
@@ -152,7 +152,7 @@ const Espectacular = () => {
       // Si hay más de 1 slide, usamos Swiper
       if (slides.length > 1) {
           return (
-            // CORRECCIÓN: Quitamos 'banner-ad' del contenedor para evitar doble padding/margen
+            // CORRECCIÓN: Quitamos 'hero-banner' del contenedor para evitar doble padding/margen
             <div className={`${heightClass} overflow-hidden w-100`}>
                 <Swiper
                     modules={[Pagination]}
