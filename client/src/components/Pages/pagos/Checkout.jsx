@@ -10,6 +10,8 @@ initMercadoPago('APP_USR-df328434-7a93-47a5-be69-855afe727548', {
     locale: 'es-AR' // Ajusta a tu país
 });
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const Checkout = () => {
     const [preferenceId, setPreferenceId] = useState(null);
     const [cartItems, setCartItems] = useState([]);
@@ -39,7 +41,7 @@ const Checkout = () => {
 
             try {
                 // Obtenemos el carrito actualizado del usuario
-                const res = await axios.get(`http://localhost:5000/api/users/${user.id}`);
+                const res = await axios.get(`${BACKEND_URL}/api/users/${user.id}`);
                 const userData = res.data;
 
                 if (!userData.telefono || !userData.provincia || !userData.localidad) {
@@ -65,7 +67,7 @@ const Checkout = () => {
 
                 // Crear la preferencia de pago en el backend
                 if (items.length > 0) {
-                    const paymentRes = await axios.post('http://localhost:5000/api/payment/create_preference', {
+                    const paymentRes = await axios.post(`${BACKEND_URL}/api/payment/create_preference`, {
                         userId: user.id
                     });
                     setPreferenceId(paymentRes.data.id);
@@ -91,7 +93,7 @@ const Checkout = () => {
             const storedUser = localStorage.getItem("user");
             if (!storedUser) return;
             const user = JSON.parse(storedUser);
-            await axios.put(`http://localhost:5000/api/users/${user.id}`, formData);
+            await axios.put(`${BACKEND_URL}/api/users/${user.id}`, formData);
             setMissingData(false);
         } catch (error) {
             console.error("Error updating user:", error);

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const PaymentStatus = ({ status }) => {
     const [searchParams] = useSearchParams();
     // MP puede devolver payment_id o collection_id
@@ -20,7 +22,7 @@ const PaymentStatus = ({ status }) => {
                     const userId = user._id || user.id; // Aseguramos obtener el ID correcto
                     try {
                         // 1. Obtener carrito para calcular total antes de borrarlo
-                        const userRes = await axios.get(`http://localhost:5000/api/users/${userId}`);
+                        const userRes = await axios.get(`${BACKEND_URL}/api/users/${userId}`);
                         const items = userRes.data.productosCarrito || [];
 
                         // Evitar duplicar orden si el usuario recarga y el carrito ya está vacío
@@ -38,7 +40,7 @@ const PaymentStatus = ({ status }) => {
                         }, 0);
 
                         // 2. Crear el pedido
-                        await axios.post('http://localhost:5000/api/orders', {
+                        await axios.post(`${BACKEND_URL}/api/orders`, {
                             userId: userId,
                             paymentId: paymentId,
                             status: 'approved',
@@ -46,11 +48,11 @@ const PaymentStatus = ({ status }) => {
                         });
 
                         // 3. Vaciar el carrito
-                        await axios.delete(`http://localhost:5000/api/users/cart/${userId}`);
+                        await axios.delete(`${BACKEND_URL}/api/users/cart/${userId}`);
                         
                         // 4. Actualizar reporte de ventas (BI)
                         try {
-                            await axios.post('http://localhost:5000/api/status/generate');
+                            await axios.post(`${BACKEND_URL}/api/status/generate`);
                         } catch (err) {
                             console.error("No se pudo actualizar el reporte de BI:", err);
                         }

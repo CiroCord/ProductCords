@@ -9,6 +9,8 @@ const calcularPrecioConDescuento = (precioOriginal, descuento) => {
     return (precioOriginal * (1 - descuento / 100)).toFixed(2);
 };
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const AllProducts = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,8 +42,8 @@ const AllProducts = () => {
         const fetchData = async () => {
             try {
                 const [prodRes, catRes] = await Promise.all([
-                    axios.get("http://localhost:5000/api/products"),
-                    axios.get("http://localhost:5000/api/configuration")
+                    axios.get(`${BACKEND_URL}/api/products`),
+                    axios.get(`${BACKEND_URL}/api/configuration`)
                 ]);
 
                 setProducts(prodRes.data);
@@ -66,7 +68,7 @@ const AllProducts = () => {
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
             const user = JSON.parse(storedUser);
-            axios.get(`http://localhost:5000/api/users/favorites/${user.id}`)
+            axios.get(`${BACKEND_URL}/api/users/favorites/${user.id}`)
                 .then(res => {
                     const data = Array.isArray(res.data) ? res.data : (res.data.favorites || []);
                     setFavorites(data.map(item => (item._id || item)));
@@ -148,7 +150,7 @@ const AllProducts = () => {
         
         const user = JSON.parse(storedUser);
         try {
-            await axios.post(`http://localhost:5000/api/users/cart/${user.id}`, {
+            await axios.post(`${BACKEND_URL}/api/users/cart/${user.id}`, {
                 productId: product._id,
                 quantity: quantity,
             });
@@ -172,8 +174,8 @@ const AllProducts = () => {
         setFavorites(prev => isFav ? prev.filter(id => id !== product._id) : [...prev, product._id]);
 
         try {
-            if (isFav) await axios.delete(`http://localhost:5000/api/users/favorites/${user.id}/${product._id}`);
-            else await axios.post(`http://localhost:5000/api/users/favorites/${user.id}`, { productId: product._id });
+            if (isFav) await axios.delete(`${BACKEND_URL}/api/users/favorites/${user.id}/${product._id}`);
+            else await axios.post(`${BACKEND_URL}/api/users/favorites/${user.id}`, { productId: product._id });
         } catch (error) {
             console.error(error);
         }
