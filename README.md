@@ -45,9 +45,8 @@ Este proyecto forma parte de mi portfolio personal como estudiante de Ingenierí
 
 | Home Page | Productos | Carrito | Checkout
 |:---:|:---:|:---:|:---:|
-| ![Home]([./screenshots/INICIO1.png]) | ![Productos]([./screenshots/PRODUCTOS.png]) | ![CARRITO]([./screenshots/CARRITO.png]) | ![Checkout]([./screenshots/INTEGRACION CON MP.png]) 
+| ![Home](screenshots/USUARIO/INICIO1.png) | ![Productos](./screenshots/USUARIO/PRODUCTOS.png) | ![CARRITO](./screenshots/USUARIO/CARRITO.png) | ![Checkout](./screenshots/USUARIO/MP.png) 
 
-ARRITO]([./screenshots/CARRITO.png])
 
 *(Nota: Estas imágenes demuestran el flujo de usuario)*
 
