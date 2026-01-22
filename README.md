@@ -1,13 +1,13 @@
-# [Nombre de tu Proyecto, ej: TechStore E-commerce] 🛒
+# ProductCords 🛒
 
-![Project Banner]([Link a una imagen o captura de pantalla atractiva de tu web])
+![Banner](./screenshots/BANNER.jpg)
 
 ## 🚀 Descripción
 Desarrollo de una plataforma de comercio electrónico Full Stack simulando un entorno de producción real. El objetivo principal del proyecto fue implementar una arquitectura escalable separando el cliente (Frontend) y el servidor (Backend), integrando una pasarela de pagos funcional.
 
 Este proyecto forma parte de mi portfolio personal como estudiante de Ingeniería en Sistemas, demostrando habilidades en el manejo de estado, APIs RESTful y servicios cloud.
 
-**🔗 Live Demo:** [https://tu-proyecto.vercel.app](https://tu-proyecto.vercel.app)
+**🔗 Live Demo:** [https://productcords.vercel.app/](https://productcords.vercel.app/)
 
 ---
 
@@ -16,7 +16,7 @@ Este proyecto forma parte de mi portfolio personal como estudiante de Ingenierí
 ### Frontend (Cliente)
 * **React.js:** Construcción de interfaces dinámicas y reutilizables.
 * **Vite:** Empaquetado y optimización de entorno de desarrollo.
-* **CSS Modules / Tailwind:** [Poné lo que usaste] para el diseño responsive.
+* **Bootstrap:** para el diseño responsive.
 * **React Router:** Navegación SPA (Single Page Application).
 
 ### Backend (Servidor)
@@ -26,8 +26,15 @@ Este proyecto forma parte de mi portfolio personal como estudiante de Ingenierí
 
 ### Base de Datos & Despliegue
 * **MongoDB (Atlas):** Base de datos NoSQL para persistencia de productos y órdenes.
+* **Cloudinary:** Servicio en la nube para almacenamiento y gestión optimizada de imágenes.
 * **Vercel:** Despliegue del Frontend.
 * **Render:** Despliegue del Backend (Web Service).
+
+### Librerías Destacadas
+* **Axios:** Cliente HTTP basado en promesas para la comunicación con el Backend.
+* **Swiper.js:** Biblioteca moderna para la creación de carruseles y sliders táctiles (`Espectacular.jsx`).
+* **@hello-pangea/dnd:** Implementación de interfaces "Drag & Drop" accesibles para la gestión de secciones (`ManageSections.jsx`).
+* **React Cropper:** Integración de Cropper.js para el recorte y edición de imágenes en el cliente antes de la subida (`IngresarProducto.jsx`).
 
 ---
 
@@ -42,11 +49,18 @@ Este proyecto forma parte de mi portfolio personal como estudiante de Ingenierí
 ---
 
 ## 📸 Capturas de Pantalla
-
-| Home Page | Productos | Carrito | Checkout
-|:---:|:---:|:---:|:---:|
-| ![Home](screenshots/USUARIO/INICIO1.png) | ![Productos](./screenshots/USUARIO/PRODUCTOS.png) | ![CARRITO](./screenshots/USUARIO/CARRITO.png) | ![Checkout](./screenshots/USUARIO/MP.png) 
-
+### Compra
+| Home Page | Productos | Carrito 
+|:---:|:---:|:---:|
+| ![Home](screenshots/USUARIO/INICIO1.png) | ![Productos](./screenshots/USUARIO/PRODUCTOS.png) | ![CARRITO](./screenshots/USUARIO/CARRITO.png) 
+### Pago y Recepción
+| Checkout | Revisión de pedidos
+|:---:|:---:|
+| ![Checkout](./screenshots/USUARIO/MP.png) | ![Mis Pedidos](./screenshots/USUARIO/PEDIDOS.png) 
+### Admin
+| Estadísticas y resumen | Personalización completa
+|:---:|:---:|
+| ![Estadísticas](./screenshots/ADMIN/ESTADISTICAS.png) | ![Personalización](./screenshots/ADMIN/PERSONALIZACION.png) 
 
 *(Nota: Estas imágenes demuestran el flujo de usuario)*
 
