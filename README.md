@@ -72,7 +72,7 @@ Si deseas correr este proyecto en tu máquina local:
 
 1.  **Clonar el repositorio**
     ```bash
-    git clone https://github.com/CiroCord/ProductCords (https://github.com/CiroCord/ProductCords)
+    git clone https://github.com/CiroCord/ProductCords.git
     cd ProductCords
     ```
 
