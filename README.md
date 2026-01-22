@@ -60,7 +60,7 @@ Este proyecto forma parte de mi portfolio personal como estudiante de Ingenierí
 ### Admin
 | Estadísticas y resumen | Personalización completa
 |:---:|:---:|
-| ![Estadísticas](./screenshots/ADMIN/ESTADISTICAS.png) | ![Personalización](./screenshots/ADMIN/PERSONALIZACION.png) 
+| ![Estadísticas](./screenshots/ADMIN/ESTADISTICAS.png) | ![Personalización](./screenshots/ADMIN/PERSONALIZACION.jpg) 
 
 *(Nota: Estas imágenes demuestran el flujo de usuario)*
 
@@ -72,8 +72,8 @@ Si deseas correr este proyecto en tu máquina local:
 
 1.  **Clonar el repositorio**
     ```bash
-    git clone [https://github.com/tu-usuario/tu-repo.git](https://github.com/tu-usuario/tu-repo.git)
-    cd tu-repo
+    git clone https://github.com/CiroCord/ProductCords (https://github.com/CiroCord/ProductCords)
+    cd ProductCords
     ```
 
 2.  **Configurar Variables de Entorno**
